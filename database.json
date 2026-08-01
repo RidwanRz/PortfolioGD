@@ -1,8 +1,25 @@
 {
   "projects": [
     {
-      "id": "hero_slides",
-      "slides": []
+      "id": "proj-1785605170574",
+      "title": "Kruncheez",
+      "category": "Brands",
+      "status": "live",
+      "coverImage": "images/Kruncheez/logo/Kruncheez.png",
+      "date": "2026-07-01",
+      "tags": [],
+      "description": "Premium Fast Food Diner.",
+      "isInitial": false,
+      "works": [
+        {
+          "id": "w-1785605170574-0",
+          "image": "images/Kruncheez/works/Flyer Design 2.jpg",
+          "title": "Flyer Design",
+          "category": "Flyer",
+          "description": "Flyer Design: **Burger Deal**"
+        }
+      ],
+      "views": 1
     }
   ],
   "categories": [
@@ -11,10 +28,11 @@
   ],
   "heroSlides": [],
   "customCategories": [
-    "Ridwan"
+    "Crypto / Finance",
+    "Brands"
   ],
   "settings": {
-    "publicViews": true,
+    "publicViews": false,
     "footer": {
       "email": "ridwanrzcrypto@gmail.com",
       "dribbble": "",

@@ -39,10 +39,9 @@ body {
   font-family: var(--font-body);
   line-height: 1.6;
   overflow-x: hidden;
-  cursor: none;
 }
 
-a, button, input, select, textarea, .clickable, .manage-item, .cat-badge {
+.public-page, .public-page * {
   cursor: none !important;
 }
 
