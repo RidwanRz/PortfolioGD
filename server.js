@@ -105,6 +105,24 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
   res.json({ success: true, path: relativePath });
 });
 
+// API: Delete Project Images
+app.delete('/api/images/:project', (req, res) => {
+  const projectName = req.params.project;
+  const safeProjectName = projectName.replace(/[^a-z0-9]/gi, '_');
+  const dir = path.join(__dirname, 'images', safeProjectName);
+  
+  if (fs.existsSync(dir)) {
+    try {
+      fs.rmSync(dir, { recursive: true, force: true });
+      res.json({ success: true });
+    } catch (err) {
+      res.status(500).json({ error: 'Failed to delete images' });
+    }
+  } else {
+    res.json({ success: true, message: 'Directory did not exist' });
+  }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

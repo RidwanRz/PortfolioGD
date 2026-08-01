@@ -1000,6 +1000,10 @@ async function deleteProject(id) {
     }
   }
   
+  try { 
+    await fetch('http://localhost:3000/api/images/' + encodeURIComponent(item.title), { method: 'DELETE' });
+  } catch(e) { console.error('Failed to delete images', e); }
+  
   try { await dbDelete(id); } catch(e) {}
 
   state.projects = state.projects.filter(a => a.id !== id);
@@ -1375,6 +1379,7 @@ function bindEvents() {
     if (!confirm(`Are you sure you want to delete ${checkboxes.length} projects?`)) return;
     
     const idsToDelete = checkboxes.map(cb => cb.dataset.id);
+    const projectsToDelete = state.projects.filter(p => idsToDelete.includes(p.id));
     state.projects = state.projects.filter(p => !idsToDelete.includes(p.id));
     
     // Save to DB
@@ -1396,6 +1401,13 @@ function bindEvents() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(db)
       });
+      
+      for (const p of projectsToDelete) {
+        try {
+          await fetch('http://localhost:3000/api/images/' + encodeURIComponent(p.title), { method: 'DELETE' });
+        } catch(e) { console.error('Failed to delete images for', p.title, e); }
+      }
+      
       renderAll();
       showToast(`${idsToDelete.length} Projects Deleted.`, 'success');
     } catch(err) {
