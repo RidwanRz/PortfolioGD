@@ -25,7 +25,8 @@ const state = {
 // ─── API DATABASE ────────────────────────────────────────────────────────────
 async function dbFetchFull() {
   try {
-    const res = await fetch('/api/data');
+    // const res = await fetch('/api/data'); // <-- Revert to this if you switch back to a Node.js host
+    const res = await fetch('/database.json'); // <-- Use this for static hosts like Netlify/Vercel
     if (!res.ok) return { projects: [] };
     return await res.json();
   } catch {
