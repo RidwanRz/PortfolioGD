@@ -123,6 +123,28 @@ app.delete('/api/images/:project', (req, res) => {
   }
 });
 
+// API: Delete specific file
+app.delete('/api/file', (req, res) => {
+  const filePath = req.query.path;
+  if (!filePath) return res.status(400).json({ error: 'Path required' });
+  
+  if (!filePath.startsWith('images/') || filePath.includes('..')) {
+    return res.status(403).json({ error: 'Invalid path' });
+  }
+
+  const absolutePath = path.join(__dirname, filePath);
+  if (fs.existsSync(absolutePath)) {
+    try {
+      fs.unlinkSync(absolutePath);
+      res.json({ success: true });
+    } catch (err) {
+      res.status(500).json({ error: 'Failed to delete file' });
+    }
+  } else {
+    res.json({ success: true, message: 'File did not exist' });
+  }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

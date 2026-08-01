@@ -1037,8 +1037,17 @@ function renderSliderAdmin() {
       e.stopPropagation(); // prevent drag
       const id = e.currentTarget.dataset.id;
       if (!confirm('Delete this slide?')) return;
+      
+      const slideToDelete = state.heroSlides.find(s => s.id === id);
       state.heroSlides = state.heroSlides.filter(s => s.id !== id);
       await saveSlides();
+      
+      if (slideToDelete && slideToDelete.image && slideToDelete.image.startsWith('images/Slides/')) {
+        try {
+          await fetch('/api/file?path=' + encodeURIComponent(slideToDelete.image), { method: 'DELETE' });
+        } catch(err) { console.error('Failed to delete slide image file', err); }
+      }
+      
       renderAll();
       showToast('Slide Deleted.', 'success');
     });

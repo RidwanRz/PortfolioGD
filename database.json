@@ -2,20 +2,7 @@
   "projects": [
     {
       "id": "hero_slides",
-      "slides": [
-        {
-          "id": "s1785589755354",
-          "image": "images/Slides/works/bitget-certificate-branding-builder-rtoken-course (1).png",
-          "title": "21312",
-          "desc": "321313"
-        },
-        {
-          "id": "s1785589762920",
-          "image": "images/Slides/works/Untitled(1).jpg",
-          "title": "13221312",
-          "desc": "123123123"
-        }
-      ]
+      "slides": []
     }
   ],
   "categories": [
