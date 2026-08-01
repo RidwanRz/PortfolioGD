@@ -26,16 +26,42 @@
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.2);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
-  font-family: var(--font-body);
+  min-height: 100vh;
   background-color: var(--bg);
   color: var(--text-main);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+a, button, input, select, textarea, .clickable, .manage-item, .cat-badge {
+  cursor: none !important;
+}
+
+/* CUSTOM CURSOR */
+.custom-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 24px; height: 24px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(0, 0);
+  color: var(--accent);
+  filter: drop-shadow(0 0 8px var(--accent));
+  transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1) scale, filter 0.2s ease; /* Only transition scale and filter, keep positional movement instantaneous */
+}
+
+.custom-cursor.hovered {
+  transform: scale(1.3);
+  filter: drop-shadow(0 0 15px var(--accent));
 }
 
 ::-webkit-scrollbar { width: 6px; }

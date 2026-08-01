@@ -38,6 +38,29 @@ async function dbFetchFull() {
 
 // ─── BOOT ─────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
+  // Custom Cursor Logic
+  const cursor = document.getElementById('custom-cursor');
+  let isHovered = false;
+  
+  if (cursor) {
+    window.addEventListener('mousemove', (e) => {
+      // JS needs to handle scale because inline transform overrides css class transform
+      const scale = isHovered ? 'scale(1.3)' : 'scale(1)';
+      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px) ${scale}`;
+    });
+
+    document.addEventListener('mouseover', (e) => {
+      const isHoverable = e.target.closest('a, button, input, select, textarea, .clickable, .manage-item, .cat-badge, .portfolio-card, img');
+      if (isHoverable) {
+        isHovered = true;
+        cursor.classList.add('hovered');
+      } else {
+        isHovered = false;
+        cursor.classList.remove('hovered');
+      }
+    });
+  }
+
   // Initialize Lenis Smooth Scroll
   if (typeof Lenis !== 'undefined') {
     const lenis = new Lenis({
