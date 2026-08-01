@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RIDWAN — Premium Visual Content</title>
+  <meta name="description" content="High-impact graphic design and infographics.">
+  
+  <!-- Fontshare Fonts: Clash Display (Headings) & Satoshi (Body) -->
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Floating Pill Navigation -->
+  <nav class="pill-nav">
+    <div class="nav-brand">
+      <div class="logo-dot"></div>
+      <span>RIDWAN DESIGNS</span>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero-section">
+    <div class="hero-content">
+      <span id="hero-badge" class="hero-badge">GRAPHICS DESIGN PORTFOLIO</span>
+      <h1 id="hero-title" class="hero-title">
+        PREMIUM<br>
+        <span class="text-accent">VISUALS</span> THAT<br>
+        MOVE FAST.
+      </h1>
+      <div id="hero-subtitle" class="hero-subtitle">High-impact infographics, editorial design, and data visualization crafted for forward-thinking brands.</div>
+      <button class="btn-glow" onclick="document.querySelector('.portfolio-controls').scrollIntoView({behavior: 'smooth'})">
+        <span>SEE MY WORKS</span>
+      </button>
+    </div>
+    
+    <div class="hero-right-panel" id="hero-right-panel">
+      <!-- Original Stats (Visible on Project View) -->
+      <div class="hero-stats" id="hero-stats-container">
+        <div class="stat-box">
+          <span class="stat-num" id="stat-total-badge">0</span>
+          <span class="stat-label" id="stat-total-label">TOTAL PROJECTS</span>
+        </div>
+        <div class="stat-box" id="stat-views-box" style="display: none;">
+          <span class="stat-num" id="stat-views-badge">0</span>
+          <span class="stat-label">TOTAL VIEWS</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">HIGH IMPACT</span>
+        </div>
+      </div>
+      
+      <!-- Premium Visuals Slider (Visible on Home View) -->
+      <div class="hero-slider-wrapper" id="hero-slider-container">
+        <div class="hero-slider-track" id="hero-slider-track">
+          <!-- Slides dynamically injected by app.js -->
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    
+    <div class="section-title" id="grid-section-title" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+      <h2>MY PROJECTS</h2>
+      <button id="back-to-projects-btn" class="btn-secondary hidden">
+        <i class="fa-solid fa-arrow-left"></i> BACK TO PROJECTS
+      </button>
+    </div>
+
+    <div class="portfolio-controls">
+      <div class="nav-filters" id="category-filters">
+        <!-- Category filters injected by JS -->
+      </div>
+
+      <div class="controls-right">
+        <div class="view-toggle">
+          <button class="vtbtn active" data-view="grid"><i class="fa-solid fa-border-all"></i></button>
+          <button class="vtbtn" data-view="list"><i class="fa-solid fa-list"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Portfolio Bento Grid -->
+    <div class="portfolio-grid view-grid" id="portfolio-grid"></div>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="empty-state hidden">
+      <h2 id="empty-title">NO WORKS FOUND</h2>
+      <p id="empty-desc">Adjust your category filter.</p>
+      <button id="reset-filter-btn" class="btn-primary">Reset Filters</button>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <h2 class="footer-title">Let's Work Together.</h2>
+      
+      <div id="footer-email-block" class="footer-email-block hidden">
+        <span id="footer-email-text" class="footer-email-text"></span>
+        <button id="footer-copy-btn" class="btn-secondary footer-copy-btn" title="Copy Email">
+          COPY <i class="fa-regular fa-copy"></i>
+        </button>
+      </div>
+
+      <div id="footer-socials" class="footer-socials hidden">
+        <a id="link-dribbble" href="#" target="_blank" class="social-icon hidden"><i class="fa-brands fa-dribbble"></i></a>
+        <a id="link-behance" href="#" target="_blank" class="social-icon hidden"><i class="fa-brands fa-behance"></i></a>
+        <a id="link-twitter" href="#" target="_blank" class="social-icon hidden"><i class="fa-brands fa-x-twitter"></i></a>
+        <a id="link-linkedin" href="#" target="_blank" class="social-icon hidden"><i class="fa-brands fa-linkedin"></i></a>
+        <a id="link-instagram" href="#" target="_blank" class="social-icon hidden"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+
+      <div class="footer-bottom">
+        <span>RIDWAN DESIGNS © 2026</span>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ==============================================
+       MODALS
+       ============================================== -->
+
+  <!-- LIGHTBOX MODAL -->
+  <div id="lightbox-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <button class="lb-close" id="close-lightbox"><i class="fa-solid fa-xmark"></i></button>
+
+    <div class="lightbox-inner">
+      <div class="lb-image-zone">
+        <img id="lightbox-img" src="" alt="">
+        <div class="lb-zoom-controls">
+          <button id="zoom-out-btn"><i class="fa-solid fa-minus"></i></button>
+          <span id="zoom-level">100%</span>
+          <button id="zoom-in-btn"><i class="fa-solid fa-plus"></i></button>
+          <button id="reset-zoom-btn"><i class="fa-solid fa-rotate-left"></i></button>
+        </div>
+      </div>
+
+      <aside class="lb-sidebar">
+        <div class="lb-sidebar-content">
+          <span id="lightbox-category" class="cat-badge">CATEGORY</span>
+          <h2 id="lightbox-title" class="lb-title">Title</h2>
+          <p id="lightbox-date" class="lb-date">Date</p>
+          <div id="lightbox-tags" class="lb-tags"></div>
+          <div id="lightbox-description" class="lb-desc">Description</div>
+        </div>
+        
+        <div class="lb-actions">
+          <a id="lightbox-download" href="#" download class="btn-primary">Download HQ <i class="fa-solid fa-download"></i></a>
+          <button id="lightbox-copy" class="btn-secondary">Copy Link <i class="fa-solid fa-link"></i></button>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Nav Arrows -->
+    <button class="lb-nav lb-prev" id="lb-prev"><i class="fa-solid fa-arrow-left"></i></button>
+    <button class="lb-nav lb-next" id="lb-next"><i class="fa-solid fa-arrow-right"></i></button>
+  </div>
+
+
+
+
+  <!-- Toast -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Markdown Parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  
+  <script src="app.js"></script>
+</body>
+</html>

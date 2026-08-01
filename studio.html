@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STUDIO ACCESS</title>
+  
+  <!-- Fontshare Fonts: Clash Display (Headings) & Satoshi (Body) -->
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Studio specific overrides */
+    body { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: #000; }
+    .studio-container { width: 100%; max-width: 900px; padding: 2rem; display: none; }
+    .studio-container.active { display: block; }
+    .admin-card { max-width: 100%; max-height: none; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+    #pin-screen { width: 100%; max-width: 400px; padding: 2rem; }
+  </style>
+</head>
+<body>
+
+  <!-- PIN SCREEN -->
+  <div id="pin-screen">
+    <div class="modal-card pin-card" style="margin: 0 auto;">
+      <div class="pin-header">
+        <i class="fa-solid fa-lock pin-icon"></i>
+        <h3>SYSTEM ACCESS</h3>
+      </div>
+      <form id="pin-form">
+        <input type="password" id="pin-input" class="pin-input" placeholder="••••" maxlength="8" autocomplete="off">
+        <div id="pin-error" class="pin-error-msg hidden">ACCESS DENIED. DEFAULT IS 1234</div>
+        <button type="submit" class="btn-primary w-full">ENTER PIN</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- STUDIO INTERFACE -->
+  <div id="studio-interface" class="studio-container">
+    <div class="modal-card admin-card">
+      <div class="admin-header">
+        <h2>STUDIO COMMAND</h2>
+        <div>
+          <button id="admin-settings-btn" class="btn-secondary btn-sm"><i class="fa-solid fa-gear"></i> CHANGE PIN</button>
+          <a href="index.html" id="exit-studio-btn" class="btn-ghost btn-sm" style="margin-left: 1rem;">EXIT</a>
+        </div>
+      </div>
+
+      <div class="studio-tabs">
+        <button class="stab active" data-tab="dashboard-tab">DASHBOARD</button>
+        <button class="stab" data-tab="upload-tab">UPLOAD</button>
+        <button class="stab" data-tab="manage-tab">MANAGE</button>
+        <button class="stab" data-tab="slider-tab">SLIDER</button>
+        <button class="stab" data-tab="categories-tab">CATEGORIES</button>
+        <button class="stab" data-tab="footer-tab">FOOTER</button>
+      </div>
+
+      <!-- Dashboard Tab -->
+      <div id="dashboard-tab" class="stab-content active">
+        <div style="display: flex; flex-direction: column; gap: 2rem; width: 100%;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+            <div class="metric-card" style="background: var(--bg); border: 1px solid var(--border); padding: 1.5rem; border-radius: var(--rad-md); text-align: center;">
+              <div style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; margin-bottom: 0.5rem;">TOTAL PROJECTS</div>
+              <div id="metric-projects" style="font-size: 2.5rem; font-family: var(--font-display); font-weight: 700; color: var(--accent);">0</div>
+            </div>
+            <div class="metric-card" style="background: var(--bg); border: 1px solid var(--border); padding: 1.5rem; border-radius: var(--rad-md); text-align: center;">
+              <div style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; margin-bottom: 0.5rem;">TOTAL IMAGES</div>
+              <div id="metric-images" style="font-size: 2.5rem; font-family: var(--font-display); font-weight: 700; color: var(--accent);">0</div>
+            </div>
+            <div class="metric-card" style="background: var(--bg); border: 1px solid var(--border); padding: 1.5rem; border-radius: var(--rad-md); text-align: center;">
+              <div style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; margin-bottom: 0.5rem;">TOTAL VIEWS</div>
+              <div id="metric-views" style="font-size: 2.5rem; font-family: var(--font-display); font-weight: 700; color: var(--accent);">0</div>
+            </div>
+          </div>
+          
+          <div style="background: var(--bg); border: 1px solid var(--border); padding: 1.5rem; border-radius: var(--rad-md);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+              <div style="font-size: 1.1rem; font-family: var(--font-display); font-weight: 600; color: var(--text-main);">PORTFOLIO SETTINGS</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: var(--rad-sm); border: 1px solid var(--border-lt);">
+              <div>
+                <strong style="display:block; margin-bottom: 0.2rem;">Public View Counts</strong>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Display the "eye" icon and view count on your public portfolio.</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="toggle-public-views">
+                <span class="slider">
+                  <span class="slider-knob"></span>
+                </span>
+              </label>
+            </div>
+          </div>
+          
+          <div style="background: var(--bg); border: 1px solid var(--border); padding: 1.5rem; border-radius: var(--rad-md);">
+            <div style="font-size: 1.1rem; font-family: var(--font-display); font-weight: 600; margin-bottom: 1.5rem; color: var(--text-main);">TOP PERFORMING PROJECTS</div>
+            <ul id="dashboard-top-projects" style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <!-- Populated via JS -->
+            </ul>
+          </div>
+
+          <div style="background: var(--bg); border: 1px solid var(--border); padding: 1.5rem; border-radius: var(--rad-md);">
+            <div style="font-size: 1.1rem; font-family: var(--font-display); font-weight: 600; margin-bottom: 1.5rem; color: var(--text-main);">CATEGORY BREAKDOWN</div>
+            <div id="dashboard-cat-chart" style="display: flex; flex-direction: column; gap: 1rem;">
+              <!-- Chart populated via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upload Tab -->
+      <div id="upload-tab" class="stab-content">
+        <form id="upload-artwork-form" class="upload-layout">
+          <div class="upload-media-section" style="display: flex; flex-direction: column; gap: 2rem;">
+            <div class="input-group">
+              <label>PROJECT COVER / LOGO</label>
+              <div id="cover-dropzone" class="dropzone" style="margin-top: 0.5rem; padding: 2rem; border-width: 2px;">
+                <input type="file" id="cover-input" accept="image/*" class="hidden">
+                <div id="cover-dz-prompt" class="dz-prompt">
+                  <i class="fa-solid fa-image" style="font-size: 2.5rem; color: var(--accent);"></i>
+                  <span style="font-size: 1.2rem;">DROP COVER/LOGO IMAGE</span>
+                </div>
+                <div id="cover-preview" class="hidden" style="display:flex; flex-direction:column; align-items:center; gap: 1rem; width: 100%;">
+                  <img src="" id="cover-preview-img" style="width: 100%; max-height: 250px; object-fit: contain; border-radius: var(--rad-sm); background: rgba(255,255,255,0.02); padding: 1rem;">
+                  <button type="button" id="remove-cover-btn" class="btn-danger btn-sm">CHANGE COVER</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>PROJECT WORKS (OPTIONAL)</label>
+              <div id="dropzone" class="dropzone" style="border-width: 2px;">
+                <input type="file" id="file-input" accept="image/*" class="hidden" multiple>
+                <div id="dropzone-prompt" class="dz-prompt">
+                  <i class="fa-solid fa-images" style="font-size: 2.5rem; color: var(--accent);"></i>
+                  <span style="font-size: 1.2rem;">DROP WORKS IMAGES</span>
+                  <button type="button" id="browse-btn" class="btn-secondary btn-sm" style="margin-top: 0.5rem;">BROWSE FILES</button>
+                </div>
+                <div id="dropzone-preview" class="dz-preview hidden" style="width: 100%; padding: 2rem;">
+                  <div style="text-align: center; border: 1px dashed var(--border); border-radius: var(--rad-sm); background: rgba(255,255,255,0.02); padding: 2rem;">
+                    <i class="fa-solid fa-check-circle" style="color: var(--accent); font-size: 2.5rem; margin-bottom: 1rem;"></i>
+                    <div id="dz-summary-text" style="margin-bottom: 1rem; font-size: 1.2rem; font-weight: 600;">0 Images Staged</div>
+                    
+                    <div id="inline-thumbnails" class="inline-thumbnails"></div>
+
+                    <div style="display:flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
+                      <button type="button" id="review-uploads-btn" class="btn-secondary">REVIEW & EDIT IMAGES</button>
+                      <button type="button" id="remove-img-btn" class="btn-danger">CLEAR ALL</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-fields" style="background: var(--bg-card); padding: 2rem; border-radius: var(--rad-md); border: 1px solid var(--border);">
+            <div style="font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--text-main); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">PROJECT DETAILS</div>
+            <div class="input-group">
+              <label>PROJECT TITLE</label>
+              <input type="text" id="artwork-title" required placeholder="e.g. Bitget Campaign">
+            </div>
+            <div class="input-row">
+              <div class="input-group">
+                <label>CATEGORY</label>
+                <select id="artwork-category" required></select>
+              </div>
+              <div class="input-group">
+                <label>STATUS</label>
+                <select id="artwork-status">
+                  <option value="live">Live</option>
+                  <option value="draft">Draft</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label>YEAR / DATE</label>
+                <input type="date" id="artwork-date">
+              </div>
+            </div>
+            <div class="input-group">
+              <label>TAGS (COMMA SEPARATED)</label>
+              <input type="text" id="artwork-tags" placeholder="UI, 3D, Editorial...">
+            </div>
+            <div class="input-group">
+              <label>PROJECT DESCRIPTION (MARKDOWN SUPPORTED)</label>
+              <textarea id="artwork-desc" rows="3" placeholder="Brief details... You can use **bold**, *italics*, - lists, and [links](url)"></textarea>
+            </div>
+            <button type="submit" class="btn-primary w-full">PUBLISH PROJECT</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Manage Tab -->
+      <div id="manage-tab" class="stab-content">
+        <div class="manage-toolbar">
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <input type="checkbox" id="manage-select-all" class="manage-checkbox" title="Select All">
+            <span>ALL ASSETS</span>
+          </div>
+          <div id="manage-default-actions">
+            <button id="export-data-btn" class="btn-secondary btn-sm">BACKUP</button>
+            <button id="import-data-btn" class="btn-secondary btn-sm">RESTORE</button>
+            <input type="file" id="import-file-input" accept=".json" class="hidden">
+          </div>
+          <div id="manage-bulk-actions" style="display:none; align-items:center; gap: 0.5rem;">
+            <span id="bulk-selected-count" style="font-size: 0.8rem; color: var(--accent); margin-right: 0.5rem;">0 Selected</span>
+            <select id="bulk-category-select" class="modern-input" style="padding: 0.3rem 0.5rem; font-size: 0.75rem; width: auto;">
+              <!-- populated dynamically -->
+            </select>
+            <button id="bulk-move-btn" class="btn-secondary btn-sm">MOVE</button>
+            <button id="bulk-delete-btn" class="btn-danger btn-sm">DELETE</button>
+          </div>
+        </div>
+        <div id="manage-list-container" class="manage-list"></div>
+      </div>
+
+      <!-- Slider Tab -->
+      <div id="slider-tab" class="stab-content">
+        <div style="display: flex; flex-direction: column; gap: 2rem; width: 100%;">
+          <div style="width: 100%;">
+            <div class="admin-header">
+              <h3>ACTIVE SLIDES</h3>
+              <span id="slider-count" class="badge">0 / 10</span>
+            </div>
+            <ul id="admin-slider-list" class="admin-list" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
+              <!-- Slides populated via JS -->
+            </ul>
+          </div>
+          
+          <div style="width: 100%;" id="add-slide-container">
+            <div class="admin-header">
+              <h3>ADD NEW SLIDE</h3>
+            </div>
+            <form id="add-slide-form" class="form-fields" style="margin-top: 1rem;">
+              <div class="input-group">
+                <label>SLIDE IMAGE</label>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-lt); border-radius: var(--rad-sm); padding: 1rem; margin-top: 0.5rem; text-align: center;">
+                  <button type="button" id="slide-upload-btn" class="btn-secondary btn-sm" style="margin-bottom: 0.8rem; width: 100%;">UPLOAD FROM DEVICE</button>
+                  <span style="font-size:0.7rem; color:var(--text-muted); font-weight: bold; letter-spacing: 1px; display: block; margin-bottom: 0.8rem;">— OR CHOOSE EXISTING —</span>
+                  <select id="slide-project-img-select" class="modern-input" style="padding: 0.5rem;">
+                    <option value="">Select from your portfolio...</option>
+                  </select>
+                </div>
+                <input type="file" id="slide-img-input" accept="image/*" class="hidden">
+                <div style="text-align: center;">
+                  <img id="slide-img-preview" class="hidden" src="" style="width: 100%; max-height: 250px; object-fit: contain; background: rgba(0,0,0,0.1); border-radius: var(--rad-sm); border: 1px solid var(--border); margin-top: 1rem;">
+                </div>
+              </div>
+              <div class="input-group">
+                <label>SLIDE TITLE</label>
+                <input type="text" id="slide-title-input" class="modern-input" placeholder="e.g. News Infographics" required>
+              </div>
+              <div class="input-group">
+                <label>SLIDE DESCRIPTION</label>
+                <input type="text" id="slide-desc-input" class="modern-input" placeholder="e.g. Impossible to ignore data visualizations." required>
+              </div>
+              <button type="submit" class="btn-primary w-full" style="margin-top: 1rem;">ADD SLIDE</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categories Tab -->
+      <div id="categories-tab" class="stab-content">
+        <div style="display: flex; flex-direction: column; gap: 2rem; width: 100%;">
+          <div style="width: 100%;">
+            <div class="admin-header">
+              <h3>CATEGORIES</h3>
+            </div>
+            <ul id="admin-cat-list" class="admin-list" style="margin-top: 1rem;">
+              <!-- Categories populated via JS -->
+            </ul>
+            <form id="add-category-form" class="form-fields" style="margin-top: 2rem;">
+              <div class="input-group">
+                <label>NEW CATEGORY</label>
+                <div style="display:flex; gap: 1rem;">
+                  <input type="text" id="new-cat-name" class="modern-input" placeholder="Category Name" required>
+                  <button type="submit" class="btn-primary">ADD</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Tab -->
+      <div id="footer-tab" class="stab-content">
+        <form id="footer-settings-form" style="display: flex; flex-direction: column; gap: 1.5rem; width: 100%;">
+          <div class="admin-header">
+            <h3>FOOTER SETTINGS</h3>
+          </div>
+          
+          <div class="form-fields">
+            <div class="input-group">
+              <label>CONTACT EMAIL</label>
+              <input type="email" id="footer-email" class="modern-input" placeholder="hello@ridwandesigns.com">
+            </div>
+            
+            <div style="margin-top: 1rem; margin-bottom: 0.5rem;">
+              <strong style="color: var(--text-main); font-size: 0.95rem;">SOCIAL LINKS</strong>
+              <p style="color: var(--text-muted); font-size: 0.8rem;">Leave blank to hide the icon.</p>
+            </div>
+            
+            <div class="input-group">
+              <label><i class="fa-brands fa-dribbble" style="color: #ea4c89;"></i> DRIBBBLE</label>
+              <input type="url" id="footer-dribbble" class="modern-input" placeholder="https://dribbble.com/...">
+            </div>
+            
+            <div class="input-group">
+              <label><i class="fa-brands fa-behance" style="color: #1769ff;"></i> BEHANCE</label>
+              <input type="url" id="footer-behance" class="modern-input" placeholder="https://behance.net/...">
+            </div>
+            
+            <div class="input-group">
+              <label><i class="fa-brands fa-x-twitter" style="color: #fff;"></i> TWITTER / X</label>
+              <input type="url" id="footer-twitter" class="modern-input" placeholder="https://x.com/...">
+            </div>
+            
+            <div class="input-group">
+              <label><i class="fa-brands fa-linkedin" style="color: #0a66c2;"></i> LINKEDIN</label>
+              <input type="url" id="footer-linkedin" class="modern-input" placeholder="https://linkedin.com/in/...">
+            </div>
+            
+            <div class="input-group">
+              <label><i class="fa-brands fa-instagram" style="color: #e1306c;"></i> INSTAGRAM</label>
+              <input type="url" id="footer-instagram" class="modern-input" placeholder="https://instagram.com/...">
+            </div>
+            
+            <button type="submit" class="btn-primary w-full" style="margin-top: 1rem;">SAVE FOOTER SETTINGS</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT PROJECT MODAL -->
+  <div id="edit-project-modal" class="modal-overlay hidden">
+    <div class="modal-card" style="max-width: 800px; max-height: 90vh; overflow-y: auto; width: 95%;">
+      <button class="card-close" id="close-edit-modal"><i class="fa-solid fa-xmark"></i></button>
+      <div class="pin-header" style="margin-bottom: 2rem;">
+        <h3>EDIT PROJECT</h3>
+      </div>
+      <form id="edit-project-form">
+        <input type="hidden" id="edit-project-id">
+        <div class="input-row">
+          <div class="input-group">
+            <label>PROJECT TITLE</label>
+            <input type="text" id="edit-title" required>
+          </div>
+          <div class="input-group">
+            <label>CATEGORY</label>
+            <select id="edit-category" required></select>
+          </div>
+          <div class="input-group">
+            <label>STATUS</label>
+            <select id="edit-status">
+              <option value="live">Live</option>
+              <option value="draft">Draft</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>YEAR / DATE</label>
+            <input type="date" id="edit-date">
+          </div>
+        </div>
+        <div class="input-group" style="margin-top: 1rem;">
+          <label>TAGS (COMMA SEPARATED)</label>
+          <input type="text" id="edit-tags">
+        </div>
+        <div class="input-group" style="margin-top: 1rem;">
+          <label>PROJECT COVER / LOGO</label>
+          <div style="display:flex; align-items:center; gap:1rem; margin-top: 0.5rem;">
+            <img id="edit-cover-preview" src="" style="width: 80px; height: 80px; object-fit: contain; border-radius: var(--rad-sm); background: rgba(255,255,255,0.05); padding: 0.5rem;">
+            <input type="file" id="edit-cover-input" accept="image/*" style="flex:1; padding: 0.5rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--rad-sm); color: var(--text);">
+          </div>
+        </div>
+        <div class="input-group" style="margin-top: 1rem; margin-bottom: 2rem;">
+          <label>PROJECT DESCRIPTION (MARKDOWN SUPPORTED)</label>
+          <textarea id="edit-desc" rows="3" placeholder="Brief details... You can use **bold**, *italics*, - lists, and [links](url)"></textarea>
+        </div>
+        
+        <div class="works-manager-section" style="margin-bottom: 2rem; padding: 1rem; border: 1px solid var(--border); border-radius: var(--rad-sm); background: rgba(255,255,255,0.02);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+            <label style="margin:0; font-family: var(--font-display); font-weight: 600;">MANAGE PROJECT IMAGES</label>
+            <button type="button" id="edit-add-image-btn" class="btn-secondary btn-sm"><i class="fa-solid fa-plus"></i> ADD IMAGES</button>
+            <input type="file" id="edit-file-input" accept="image/*" multiple class="hidden">
+          </div>
+          <div id="edit-works-list" style="display:flex; flex-direction:column; gap: 1rem; max-height: 400px; overflow-y: auto; padding-right: 0.5rem;">
+            <!-- Works items injected by JS -->
+          </div>
+        </div>
+
+        <div style="display:flex; gap: 1rem;">
+          <button type="button" id="edit-preview-btn" class="btn-secondary w-full">LIVE PREVIEW</button>
+          <button type="submit" class="btn-primary w-full">SAVE CHANGES</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- PRE-UPLOAD MODAL -->
+  <div id="pre-upload-modal" class="modal-overlay hidden">
+    <div class="modal-card" style="max-width: 800px; max-height: 90vh; overflow-y: auto; width: 95%;">
+      <button class="card-close" id="close-preupload-modal"><i class="fa-solid fa-xmark"></i></button>
+      <div class="pin-header" style="margin-bottom: 2rem;">
+        <h3>REVIEW UPLOADED IMAGES</h3>
+      </div>
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">
+        Edit the title, category, and description for each image before publishing the project.
+      </p>
+      
+      <div id="pre-upload-list" style="display:flex; flex-direction:column; gap: 1rem; margin-bottom: 2rem; max-height: 50vh; overflow-y: auto; padding-right: 0.5rem;">
+        <!-- Injected by JS -->
+      </div>
+      
+      <button type="button" id="save-preupload-btn" class="btn-primary w-full">SAVE & STAGE</button>
+    </div>
+  </div>
+
+  <!-- CHANGE PIN MODAL -->
+  <div id="change-pin-modal" class="modal-overlay hidden">
+    <div class="modal-card pin-card">
+      <button class="card-close" id="close-change-pin"><i class="fa-solid fa-xmark"></i></button>
+      <div class="pin-header">
+        <h3>UPDATE PIN</h3>
+      </div>
+      <form id="change-pin-form">
+        <div class="input-group" style="margin-bottom: 1rem;">
+          <input type="password" id="old-pin-input" placeholder="CURRENT PIN" maxlength="8" required>
+        </div>
+        <div class="input-group" style="margin-bottom: 1.5rem;">
+          <input type="password" id="new-pin-input" placeholder="NEW PIN (4-8 DIGITS)" maxlength="8" required>
+        </div>
+        <button type="submit" class="btn-primary w-full">SAVE PIN</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Markdown Parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <script src="studio.js"></script>
+</body>
+</html>

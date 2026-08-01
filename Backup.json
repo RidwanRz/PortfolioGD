@@ -1,0 +1,66 @@
+[
+  {
+    "id": "proj-bitget",
+    "title": "Bitget",
+    "category": "Crypto / Finance",
+    "coverImage": "bitget-logo.png",
+    "date": "2026",
+    "description": "Premium news infographics, educational guides, and editorial data visualization designed for the Bitget platform.",
+    "isInitial": true,
+    "tags": [
+      "Infographics",
+      "Crypto",
+      "Tutorials"
+    ],
+    "works": [
+      {
+        "id": "b1",
+        "image": "News (1).jpg",
+        "title": "Global Economic Outlook",
+        "category": "News"
+      },
+      {
+        "id": "b2",
+        "image": "News (2).jpg",
+        "title": "Renewable Energy Transition",
+        "category": "News"
+      },
+      {
+        "id": "b3",
+        "image": "News (3).jpg",
+        "title": "AI & Quantum Frontier",
+        "category": "News"
+      },
+      {
+        "id": "b4",
+        "image": "News (4).jpg",
+        "title": "Space Roadmap 2030",
+        "category": "News"
+      },
+      {
+        "id": "b5",
+        "image": "News (5).jpg",
+        "title": "Cybernetics Advance",
+        "category": "News"
+      },
+      {
+        "id": "b6",
+        "image": "News (6).jpg",
+        "title": "Smart City Networks",
+        "category": "News"
+      },
+      {
+        "id": "t1",
+        "image": "Tutorial (1).jpg",
+        "title": "Vector Color Harmonies",
+        "category": "Tutorials"
+      },
+      {
+        "id": "t2",
+        "image": "Tutorial (2).jpg",
+        "title": "Grid Layout Systems",
+        "category": "Tutorials"
+      }
+    ]
+  }
+]
