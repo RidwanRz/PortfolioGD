@@ -47,6 +47,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       // JS needs to handle scale because inline transform overrides css class transform
       const scale = isHovered ? 'scale(1.3)' : 'scale(1)';
       cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px) ${scale}`;
+      if (!cursor.classList.contains('visible')) {
+        cursor.classList.add('visible');
+      }
+    });
+
+    document.addEventListener('mouseleave', () => {
+      cursor.classList.remove('visible');
+    });
+
+    document.addEventListener('mouseenter', () => {
+      cursor.classList.add('visible');
     });
 
     document.addEventListener('mouseover', (e) => {

@@ -56,7 +56,12 @@ a, button, input, select, textarea, .clickable, .manage-item, .cat-badge {
   transform: translate(0, 0);
   color: var(--accent);
   filter: drop-shadow(0 0 8px var(--accent));
-  transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1) scale, filter 0.2s ease; /* Only transition scale and filter, keep positional movement instantaneous */
+  opacity: 0;
+  transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1) scale, filter 0.2s ease, opacity 0.2s ease;
+}
+
+.custom-cursor.visible {
+  opacity: 1;
 }
 
 .custom-cursor.hovered {
