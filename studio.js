@@ -1512,4 +1512,27 @@ function renderFooterAdmin() {
       showToast('Failed to save settings.', 'error');
     }
   });
+
+  const resetBtn = document.getElementById('factory-reset-btn');
+  if (resetBtn) {
+    const newResetBtn = resetBtn.cloneNode(true);
+    resetBtn.parentNode.replaceChild(newResetBtn, resetBtn);
+    
+    newResetBtn.addEventListener('click', async () => {
+      const confirm1 = confirm("WARNING: This will erase all projects, images, slides, and settings. Are you absolutely sure?");
+      if (!confirm1) return;
+      
+      const confirm2 = confirm("FINAL WARNING: This cannot be undone. Click OK to wipe everything to factory settings.");
+      if (!confirm2) return;
+      
+      try {
+        await fetch('/api/reset', { method: 'POST' });
+        localStorage.clear();
+        alert('Database has been completely erased. The studio will now reload.');
+        window.location.reload();
+      } catch (err) {
+        showToast('Factory reset failed.', 'error');
+      }
+    });
+  }
 }

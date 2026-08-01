@@ -1,10 +1,5 @@
 {
-  "projects": [
-    {
-      "id": "hero_slides",
-      "slides": []
-    }
-  ],
+  "projects": [],
   "categories": [
     "Crypto / Finance",
     "Education"
@@ -16,17 +11,12 @@
   "settings": {
     "publicViews": true,
     "footer": {
-      "email": "ridwanrzcrypto@gmail.com",
+      "email": "",
       "dribbble": "",
       "behance": "",
-      "twitter": "https://x.com/BHunteria",
+      "twitter": "",
       "linkedin": "",
       "instagram": ""
     }
-  },
-  "deletedInitials": [
-    "proj-bitget",
-    "proj-1785563225933",
-    "proj-1785568146020"
-  ]
+  }
 }

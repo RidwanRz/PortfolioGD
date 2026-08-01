@@ -145,6 +145,38 @@ app.delete('/api/file', (req, res) => {
   }
 });
 
+// API: Erase Database (Factory Reset)
+app.post('/api/reset', (req, res) => {
+  const defaultDB = {
+    projects: [],
+    categories: ["Crypto / Finance", "Education"],
+    heroSlides: [],
+    customCategories: ["Ridwan"],
+    settings: {
+      publicViews: true,
+      footer: { email: "", dribbble: "", behance: "", twitter: "", linkedin: "", instagram: "" }
+    }
+  };
+
+  try {
+    // 1. Overwrite database
+    fs.writeFileSync(DB_FILE, JSON.stringify(defaultDB, null, 2));
+
+    // 2. Wipe images folder contents
+    const imagesDir = path.join(__dirname, 'images');
+    if (fs.existsSync(imagesDir)) {
+      const files = fs.readdirSync(imagesDir);
+      for (const file of files) {
+        fs.rmSync(path.join(imagesDir, file), { recursive: true, force: true });
+      }
+    }
+    
+    res.json({ success: true, message: 'Database reset successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to reset database' });
+  }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
