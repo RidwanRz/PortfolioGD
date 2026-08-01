@@ -25,7 +25,7 @@ const state = {
 // ─── API DATABASE ────────────────────────────────────────────────────────────
 async function dbFetchFull() {
   try {
-    const res = await fetch('http://localhost:3000/api/data');
+    const res = await fetch('/api/data');
     if (!res.ok) return { projects: [] };
     return await res.json();
   } catch {
@@ -287,7 +287,7 @@ function renderGrid() {
         if (!localStorage.getItem(viewedKey)) {
           localStorage.setItem(viewedKey, 'true');
           try {
-            await fetch('http://localhost:3000/api/view/' + projectId, { method: 'POST' });
+            await fetch('/api/view/' + projectId, { method: 'POST' });
           } catch(e) {}
         }
         

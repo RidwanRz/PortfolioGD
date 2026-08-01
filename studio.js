@@ -25,7 +25,7 @@ const state = {
 // â”€â”€â”€ API DATABASE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function dbFetchFull() {
   try {
-    const res = await fetch('http://localhost:3000/api/data');
+    const res = await fetch('/api/data');
     if (!res.ok) return { projects: [] };
     return await res.json();
   } catch { return { projects: [] }; }
@@ -40,7 +40,7 @@ async function dbPut(project) {
   
   db.projects = current;
   
-  await fetch('http://localhost:3000/api/data', {
+  await fetch('/api/data', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(db)
@@ -53,7 +53,7 @@ async function dbDelete(id) {
   current = current.filter(p => p.id !== id);
   db.projects = current;
   
-  await fetch('http://localhost:3000/api/data', {
+  await fetch('/api/data', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(db)
@@ -66,7 +66,7 @@ async function uploadImageFile(file, projectName, type = '') {
   if (type) formData.append('type', type);
   formData.append('image', file);
   
-  const res = await fetch('http://localhost:3000/api/upload', {
+  const res = await fetch('/api/upload', {
     method: 'POST',
     body: formData
   });
@@ -130,7 +130,7 @@ async function saveCustomCategories() {
   
   const db = await dbFetchFull();
   db.customCategories = custom;
-  await fetch('http://localhost:3000/api/data', {
+  await fetch('/api/data', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(db)
@@ -313,7 +313,7 @@ function renderDashboard() {
       const db = await dbFetchFull();
       db.settings = state.settings;
       try {
-        await fetch('http://localhost:3000/api/data', {
+        await fetch('/api/data', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(db)
@@ -846,7 +846,7 @@ function renderManageList() {
     async () => {
       const db = await dbFetchFull();
       db.projects = state.projects;
-      await fetch('http://localhost:3000/api/data', {
+      await fetch('/api/data', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(db)
@@ -992,7 +992,7 @@ async function deleteProject(id) {
       db.deletedInitials = del;
       localStorage.setItem('deleted_initials', JSON.stringify(del));
       
-      await fetch('http://localhost:3000/api/data', {
+      await fetch('/api/data', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(db)
@@ -1001,7 +1001,7 @@ async function deleteProject(id) {
   }
   
   try { 
-    await fetch('http://localhost:3000/api/images/' + encodeURIComponent(item.title), { method: 'DELETE' });
+    await fetch('/api/images/' + encodeURIComponent(item.title), { method: 'DELETE' });
   } catch(e) { console.error('Failed to delete images', e); }
   
   try { await dbDelete(id); } catch(e) {}
@@ -1155,7 +1155,7 @@ function renderCategoryList() {
       const db = await dbFetchFull();
       db.projects = state.projects;
       try {
-        await fetch('http://localhost:3000/api/data', {
+        await fetch('/api/data', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(db)
@@ -1396,7 +1396,7 @@ function bindEvents() {
     db.deletedInitials = deletedInitials;
 
     try {
-      await fetch('http://localhost:3000/api/data', {
+      await fetch('/api/data', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(db)
@@ -1404,7 +1404,7 @@ function bindEvents() {
       
       for (const p of projectsToDelete) {
         try {
-          await fetch('http://localhost:3000/api/images/' + encodeURIComponent(p.title), { method: 'DELETE' });
+          await fetch('/api/images/' + encodeURIComponent(p.title), { method: 'DELETE' });
         } catch(e) { console.error('Failed to delete images for', p.title, e); }
       }
       
@@ -1431,7 +1431,7 @@ function bindEvents() {
     const db = await dbFetchFull();
     db.projects = state.projects;
     try {
-      await fetch('http://localhost:3000/api/data', {
+      await fetch('/api/data', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(db)
@@ -1493,7 +1493,7 @@ function renderFooterAdmin() {
     const db = await dbFetchFull();
     db.settings = state.settings;
     try {
-      await fetch('http://localhost:3000/api/data', {
+      await fetch('/api/data', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(db)
