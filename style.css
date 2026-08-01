@@ -46,6 +46,11 @@ a, button, input, select, textarea, .clickable, .manage-item, .cat-badge {
   cursor: none !important;
 }
 
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
 /* CUSTOM CURSOR */
 .custom-cursor {
   position: fixed;
@@ -57,7 +62,7 @@ a, button, input, select, textarea, .clickable, .manage-item, .cat-badge {
   color: var(--accent);
   filter: drop-shadow(0 0 8px var(--accent));
   opacity: 0;
-  transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1) scale, filter 0.2s ease, opacity 0.2s ease;
+  transition: filter 0.2s ease, opacity 0.2s ease;
 }
 
 .custom-cursor.visible {

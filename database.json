@@ -1,5 +1,29 @@
 {
-  "projects": [],
+  "projects": [
+    {
+      "id": "hero_slides",
+      "slides": [
+        {
+          "id": "s1785600364272",
+          "image": "images/Slides/works/bitget-certificate-branding-builder-rtoken-course (1).png",
+          "title": "44r2",
+          "desc": "2412432"
+        },
+        {
+          "id": "s1785600378934",
+          "image": "images/Slides/works/Untitled(1).jpg",
+          "title": "1231`3",
+          "desc": "1`231`21`"
+        },
+        {
+          "id": "s1785600389292",
+          "image": "images/Slides/works/News (2).jpg",
+          "title": "21312`3123",
+          "desc": "31231231`"
+        }
+      ]
+    }
+  ],
   "categories": [
     "Crypto / Finance",
     "Education"

@@ -40,23 +40,41 @@ async function dbFetchFull() {
 document.addEventListener('DOMContentLoaded', async () => {
   // Custom Cursor Logic
   const cursor = document.getElementById('custom-cursor');
-  let isHovered = false;
   
   if (cursor) {
-    window.addEventListener('mousemove', (e) => {
-      // JS needs to handle scale because inline transform overrides css class transform
+    let mouseX = 0, mouseY = 0;
+    let isHovered = false;
+    let isVisible = false;
+
+    // Use requestAnimationFrame for buttery smooth performance that doesn't freeze on drag
+    function updateCursor() {
       const scale = isHovered ? 'scale(1.3)' : 'scale(1)';
-      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px) ${scale}`;
-      if (!cursor.classList.contains('visible')) {
+      cursor.style.transform = `translate(${mouseX}px, ${mouseY}px) ${scale}`;
+      requestAnimationFrame(updateCursor);
+    }
+    requestAnimationFrame(updateCursor);
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!isVisible) {
+        isVisible = true;
         cursor.classList.add('visible');
       }
     });
 
+    // Prevent all native dragging (images, selected text, links) to stop the browser from pausing mousemove events and freezing the custom cursor
+    document.addEventListener('dragstart', (e) => {
+      e.preventDefault();
+    });
+
     document.addEventListener('mouseleave', () => {
+      isVisible = false;
       cursor.classList.remove('visible');
     });
 
     document.addEventListener('mouseenter', () => {
+      isVisible = true;
       cursor.classList.add('visible');
     });
 
@@ -407,17 +425,22 @@ function renderGrid() {
 }
 
 // ─── LIGHTBOX ─────────────────────────────────────────────────────────────
-function openLightbox(idx) {
-  if (!state.activeProject) return;
-  const works = state.activeProject.works || [];
-  if (!works.length) return;
+function openLightbox(idx, sourceArray = null) {
+  state.lightboxSource = sourceArray || (state.activeProject ? state.activeProject.works : []);
+  if (!state.lightboxSource || !state.lightboxSource.length) return;
 
-  state.lightboxIndex = Math.max(0, Math.min(idx, works.length - 1));
-  populateLightbox(works[state.lightboxIndex]);
+  state.lightboxIndex = Math.max(0, Math.min(idx, state.lightboxSource.length - 1));
+  populateLightbox(state.lightboxSource[state.lightboxIndex], !!sourceArray);
   
   const modal = document.getElementById('lightbox-modal');
   const lbImg = document.getElementById('lightbox-img');
-  const thumb = document.querySelector(`.work-card[data-idx="${state.lightboxIndex}"] img`);
+  
+  let thumb;
+  if (state.activeProject && sourceArray !== state.heroSlides) {
+    thumb = document.querySelector(`.work-card[data-idx="${state.lightboxIndex}"] img`);
+  } else {
+    thumb = document.querySelector(`.hero-slide[data-idx="${state.lightboxIndex}"] img`);
+  }
   
   if (thumb) {
     const startRect = thumb.getBoundingClientRect();
@@ -458,7 +481,14 @@ function openLightbox(idx) {
 function closeLightbox() {
   const modal = document.getElementById('lightbox-modal');
   const lbImg = document.getElementById('lightbox-img');
-  const thumb = document.querySelector(`.work-card[data-idx="${state.lightboxIndex}"] img`);
+  
+  // Find thumb based on whether it's a project work or a slide
+  let thumb;
+  if (state.activeProject && state.lightboxSource !== state.heroSlides) {
+    thumb = document.querySelector(`.work-card[data-idx="${state.lightboxIndex}"] img`);
+  } else {
+    thumb = document.querySelector(`.hero-slide[data-idx="${state.lightboxIndex}"] img`);
+  }
   
   if (thumb) {
     const endRect = thumb.getBoundingClientRect();
@@ -486,22 +516,34 @@ function closeLightbox() {
 }
 
 function lightboxNav(dir) {
-  const works = state.activeProject.works || [];
-  state.lightboxIndex = (state.lightboxIndex + dir + works.length) % works.length;
+  const source = state.lightboxSource || [];
+  if (!source.length) return;
+  
+  state.lightboxIndex = (state.lightboxIndex + dir + source.length) % source.length;
   state.currentZoom = 1;
   document.getElementById('lightbox-img').style.transform = 'scale(1)';
   document.getElementById('zoom-level').textContent = '100%';
-  populateLightbox(works[state.lightboxIndex]);
+  populateLightbox(source[state.lightboxIndex], source === state.heroSlides);
 }
 
-function populateLightbox(work) {
+function populateLightbox(work, isSlide = false) {
   document.getElementById('lightbox-img').src = work.image;
   document.getElementById('lightbox-title').textContent = work.title || 'Untitled';
-  document.getElementById('lightbox-date').textContent = state.activeProject.title; // Show project name here
+  
+  const dateEl = document.getElementById('lightbox-date');
+  const catEl = document.getElementById('lightbox-category');
+  
+  if (isSlide || !state.activeProject) {
+    dateEl.textContent = 'Featured Slide';
+    catEl.textContent = 'Highlight';
+  } else {
+    dateEl.textContent = state.activeProject.title; // Show project name here
+    catEl.textContent = state.activeProject.category;
+  }
+  
   const lbDesc = document.getElementById('lightbox-description');
-  const rawLbDesc = work.description || '';
+  const rawLbDesc = work.description || work.desc || '';
   lbDesc.innerHTML = typeof marked !== 'undefined' ? marked.parse(rawLbDesc) : rawLbDesc;
-  document.getElementById('lightbox-category').textContent = state.activeProject.category;
   
   const tagsEl = document.getElementById('lightbox-tags');
   tagsEl.innerHTML = ''; // Specific tags removed for brevity, or can inherit from project
@@ -616,9 +658,9 @@ function initSlider() {
   }
   
   container.style.display = 'block';
-  track.innerHTML = state.heroSlides.map(s => `
-    <div class="hero-slide">
-      <div class="slide-image">
+  track.innerHTML = state.heroSlides.map((s, i) => `
+    <div class="hero-slide" data-idx="${i}">
+      <div class="slide-image clickable" onclick="openLightbox(${i}, state.heroSlides)">
         <img src="${s.image}" alt="${s.title}">
       </div>
       <div class="slide-text">
