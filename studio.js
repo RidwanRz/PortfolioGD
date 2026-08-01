@@ -743,6 +743,7 @@ async function handleUploadSubmit(e) {
     document.getElementById('cover-preview').classList.add('hidden');
     document.getElementById('cover-preview-img').src = '';
     document.getElementById('cover-input').value = '';
+    document.getElementById('cover-dz-prompt').classList.remove('hidden');
     renderAll();
     showToast('Project Published.', 'success');
   } catch(e) {

@@ -1,11 +1,88 @@
 {
-  "projects": [],
+  "projects": [
+    {
+      "id": "proj-1785584252934",
+      "title": "Dondong",
+      "category": "Ridwan",
+      "status": "live",
+      "coverImage": "images/Dondong/logo/bitget-certificate-branding-builder-rtoken-course (1).png",
+      "date": "2026-08-01",
+      "tags": [
+        "Logo Design",
+        "Brand"
+      ],
+      "description": "121321",
+      "isInitial": false,
+      "works": [
+        {
+          "id": "w-1785584252811-0",
+          "image": "images/Dondong/works/bitget-certificate-branding-builder-rtoken-course (1).png",
+          "title": "bitget-certificate-branding-builder-rtoken-course (1)",
+          "category": "",
+          "description": ""
+        },
+        {
+          "id": "w-1785584252818-1",
+          "image": "images/Dondong/works/Untitled(1).jpg",
+          "title": "Untitled(1)",
+          "category": "",
+          "description": ""
+        },
+        {
+          "id": "w-1785584252934-2",
+          "image": "images/Dondong/works/bitget-certificate-branding-builder-rtoken-course.png",
+          "title": "bitget-certificate-branding-builder-rtoken-course",
+          "category": "",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": "proj-1785584419109",
+      "title": "The Tip Room",
+      "category": "Ridwan",
+      "status": "live",
+      "coverImage": "images/The_Tip_Room/logo/bitget-certificate-branding-builder-rtoken-course (1).png",
+      "date": "2026-08-01",
+      "tags": [
+        "Logo Design",
+        "Brand"
+      ],
+      "description": "1231312",
+      "isInitial": false,
+      "works": [
+        {
+          "id": "w-1785584419073-0",
+          "image": "images/The_Tip_Room/works/bitget-certificate-branding-builder-rtoken-course (1).png",
+          "title": "bitget-certificate-branding-builder-rtoken-course (1)",
+          "category": "",
+          "description": ""
+        },
+        {
+          "id": "w-1785584419081-1",
+          "image": "images/The_Tip_Room/works/Untitled(1).jpg",
+          "title": "Untitled(1)",
+          "category": "",
+          "description": ""
+        },
+        {
+          "id": "w-1785584419109-2",
+          "image": "images/The_Tip_Room/works/bitget-certificate-branding-builder-rtoken-course.png",
+          "title": "bitget-certificate-branding-builder-rtoken-course",
+          "category": "",
+          "description": ""
+        }
+      ]
+    }
+  ],
   "categories": [
     "Crypto / Finance",
     "Education"
   ],
   "heroSlides": [],
-  "customCategories": [],
+  "customCategories": [
+    "Ridwan"
+  ],
   "settings": {
     "publicViews": true,
     "footer": {
