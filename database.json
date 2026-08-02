@@ -20,6 +20,29 @@
         }
       ],
       "views": 1
+    },
+    {
+      "id": "proj-1785644290153",
+      "title": "The Tip Room",
+      "category": "Crypto / Finance",
+      "status": "live",
+      "coverImage": "images/The_Tip_Room/logo/Untitled71.png",
+      "date": "2019-01-12",
+      "tags": [
+        "Logo Design",
+        "Brand"
+      ],
+      "description": "Made logo for the brand in Telegram. It's a project that tips $$ people freely on Telegram.",
+      "isInitial": false,
+      "works": [
+        {
+          "id": "w-1785644290153-0",
+          "image": "images/The_Tip_Room/works/TTR.jpg",
+          "title": "The Tip Room",
+          "category": "Logo",
+          "description": "Meet people and get free coins for hanging out and being active in the group using a telegram tip bot."
+        }
+      ]
     }
   ],
   "categories": [
