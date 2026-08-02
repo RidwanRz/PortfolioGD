@@ -73,6 +73,12 @@ img {
   filter: drop-shadow(0 0 15px var(--accent));
 }
 
+.custom-cursor.grabbing {
+  transform: scale(0.85);
+  color: #fff; /* Turn the cursor itself bright white */
+  filter: drop-shadow(0 0 25px #ffffff) drop-shadow(0 0 10px var(--accent)); /* Double stacked intense glow */
+}
+
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border-lt); border-radius: var(--rad-pill); }

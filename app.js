@@ -19,7 +19,9 @@ const state = {
   lightboxIndex: 0,
   activeProject: null, // If null, show projects. If set, show works inside project.
   heroSlides: [],
-  settings: { publicViews: true }
+  settings: { publicViews: true },
+  panX: 0,
+  panY: 0
 };
 
 // ─── API DATABASE ────────────────────────────────────────────────────────────
@@ -430,7 +432,11 @@ function openLightbox(idx, sourceArray = null) {
   if (!state.lightboxSource || !state.lightboxSource.length) return;
 
   state.lightboxIndex = Math.max(0, Math.min(idx, state.lightboxSource.length - 1));
+  state.currentZoom = 1;
+  state.panX = 0;
+  state.panY = 0;
   populateLightbox(state.lightboxSource[state.lightboxIndex], !!sourceArray);
+  document.getElementById('zoom-level').textContent = '100%';
   
   const modal = document.getElementById('lightbox-modal');
   const lbImg = document.getElementById('lightbox-img');
@@ -520,9 +526,7 @@ function lightboxNav(dir) {
   if (!source.length) return;
   
   state.lightboxIndex = (state.lightboxIndex + dir + source.length) % source.length;
-  state.currentZoom = 1;
-  document.getElementById('lightbox-img').style.transform = 'scale(1)';
-  document.getElementById('zoom-level').textContent = '100%';
+  setZoom(1);
   populateLightbox(source[state.lightboxIndex], source === state.heroSlides);
 }
 
@@ -555,7 +559,11 @@ function populateLightbox(work, isSlide = false) {
 
 function setZoom(z) {
   state.currentZoom = Math.min(3, Math.max(0.5, z));
-  document.getElementById('lightbox-img').style.transform = `scale(${state.currentZoom})`;
+  if (state.currentZoom <= 1) {
+    state.panX = 0;
+    state.panY = 0;
+  }
+  document.getElementById('lightbox-img').style.transform = `translate(${state.panX}px, ${state.panY}px) scale(${state.currentZoom})`;
   document.getElementById('zoom-level').textContent = Math.round(state.currentZoom * 100) + '%';
 }
 
@@ -634,6 +642,35 @@ function bindEvents() {
   document.getElementById('zoom-out-btn')?.addEventListener('click', () => setZoom(state.currentZoom - 0.25));
   document.getElementById('reset-zoom-btn')?.addEventListener('click', () => setZoom(1));
   document.getElementById('lightbox-copy')?.addEventListener('click', () => { navigator.clipboard.writeText(document.getElementById('lightbox-title').textContent); showToast('Link Copied.', 'success'); });
+
+  // Lightbox Panning
+  const lbImg = document.getElementById('lightbox-img');
+  let isPanning = false;
+  let startX = 0, startY = 0;
+
+  if (lbImg) {
+    lbImg.addEventListener('mousedown', (e) => {
+      if (state.currentZoom > 1) {
+        isPanning = true;
+        startX = e.clientX - state.panX;
+        startY = e.clientY - state.panY;
+        document.getElementById('custom-cursor')?.classList.add('grabbing');
+      }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (isPanning) {
+        state.panX = e.clientX - startX;
+        state.panY = e.clientY - startY;
+        lbImg.style.transform = `translate(${state.panX}px, ${state.panY}px) scale(${state.currentZoom})`;
+      }
+    });
+
+    window.addEventListener('mouseup', () => {
+      isPanning = false;
+      document.getElementById('custom-cursor')?.classList.remove('grabbing');
+    });
+  }
 
 
 }
