@@ -263,19 +263,34 @@ function renderCategoryNav() {
   }
 
   container.innerHTML = `
-    <select class="cat-dropdown" id="cat-dropdown">
+    <div class="cat-tabs-container" id="cat-tabs-container">
       ${pillsData.map(p => `
-        <option value="${p.cat}" ${state.activeCategory === p.cat ? 'selected' : ''}>
+        <button class="cat-tab ${state.activeCategory === p.cat ? 'active' : ''}" data-cat="${p.cat}">
           ${p.label}
-        </option>
+        </button>
       `).join('')}
-    </select>
+    </div>
   `;
 
-  document.getElementById('cat-dropdown').addEventListener('change', (e) => {
-    state.activeCategory = e.target.value;
-    renderAll();
+  // Click event for tabs
+  const tabs = container.querySelectorAll('.cat-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      state.activeCategory = e.currentTarget.dataset.cat;
+      renderAll();
+    });
   });
+
+  // Horizontal scroll on wheel
+  const tabContainer = document.getElementById('cat-tabs-container');
+  if (tabContainer) {
+    tabContainer.addEventListener('wheel', (e) => {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        tabContainer.scrollLeft += e.deltaY;
+      }
+    }, { passive: false });
+  }
 }
 
 function renderCategorySelect() {
