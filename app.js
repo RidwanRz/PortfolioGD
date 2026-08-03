@@ -195,6 +195,19 @@ function renderAll() {
   renderFooter();
 }
 
+function animateText(element, text) {
+  element.innerHTML = '';
+  text.split('').forEach((char, i) => {
+    const span = document.createElement('span');
+    span.textContent = char === ' ' ? '\u00A0' : char;
+    span.className = 'char-animate';
+    span.style.display = 'inline-block';
+    span.style.opacity = '0';
+    span.style.animationDelay = `${i * 0.05}s`;
+    element.appendChild(span);
+  });
+}
+
 function updateHero() {
   const badge = document.getElementById('hero-badge');
   const title = document.getElementById('hero-title');
@@ -219,10 +232,11 @@ function updateHero() {
       </span>`;
     subtitle.textContent = 'High-impact infographics, editorial design, and data visualization crafted for forward-thinking brands.';
     if (statLabel) statLabel.textContent = 'TOTAL PROJECTS';
-    if (gridTitle) gridTitle.textContent = 'MY PROJECTS';
+    if (gridTitle && gridTitle.textContent !== 'MY PROJECTS') animateText(gridTitle, 'MY PROJECTS');
     backBtn.classList.add('hidden');
     if (statsContainer) statsContainer.classList.add('hidden');
     if (sliderContainer) sliderContainer.classList.remove('hidden');
+    document.querySelector('.hero-section').classList.add('full-height');
     
     const viewsBox = document.getElementById('stat-views-box');
     if (viewsBox) viewsBox.style.display = 'none';
@@ -232,10 +246,11 @@ function updateHero() {
     const rawDesc = state.activeProject.description || 'Project details.';
     subtitle.innerHTML = typeof marked !== 'undefined' ? marked.parse(rawDesc) : rawDesc;
     if (statLabel) statLabel.textContent = 'TOTAL WORKS';
-    if (gridTitle) gridTitle.textContent = 'PROJECT WORKS';
+    if (gridTitle && gridTitle.textContent !== 'PROJECT WORKS') animateText(gridTitle, 'PROJECT WORKS');
     backBtn.classList.remove('hidden');
     if (statsContainer) statsContainer.classList.remove('hidden');
     if (sliderContainer) sliderContainer.classList.add('hidden');
+    document.querySelector('.hero-section').classList.remove('full-height');
     
     const viewsBox = document.getElementById('stat-views-box');
     const viewsBadge = document.getElementById('stat-views-badge');

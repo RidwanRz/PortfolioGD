@@ -282,6 +282,10 @@ button { font-family: var(--font-display); cursor: pointer; border: none; outlin
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 2rem;
+  transition: min-height 0.3s ease;
+}
+.hero-section.full-height {
+  min-height: 100vh;
 }
 
 .hero-badge {
@@ -941,6 +945,15 @@ label { display: block; font-family: var(--font-display); font-size: 0.8rem; fon
 .toast i { color: var(--accent); }
 .toast-error i { color: var(--danger); }
 @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+@keyframes fadeUpChar {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal-on-scroll.visible .char-animate {
+  animation: fadeUpChar 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
 
 /* CATEGORY TABS */
 .cat-tabs-container {
