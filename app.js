@@ -240,6 +240,10 @@ function updateHero() {
     
     const viewsBox = document.getElementById('stat-views-box');
     if (viewsBox) viewsBox.style.display = 'none';
+
+    document.getElementById('availability-badge')?.classList.remove('hidden');
+    document.getElementById('scroll-indicator')?.classList.remove('hidden');
+    document.getElementById('ambient-bg')?.classList.remove('hidden');
   } else {
     badge.textContent = state.activeProject.category.toUpperCase();
     title.innerHTML = state.activeProject.title.toUpperCase();
@@ -251,6 +255,10 @@ function updateHero() {
     if (statsContainer) statsContainer.classList.remove('hidden');
     if (sliderContainer) sliderContainer.classList.add('hidden');
     document.querySelector('.hero-section').classList.remove('full-height');
+    
+    document.getElementById('availability-badge')?.classList.add('hidden');
+    document.getElementById('scroll-indicator')?.classList.add('hidden');
+    document.getElementById('ambient-bg')?.classList.add('hidden');
     
     const viewsBox = document.getElementById('stat-views-box');
     const viewsBadge = document.getElementById('stat-views-badge');
@@ -775,25 +783,36 @@ function initSlider() {
 // ─── SCROLL REVEAL LOGIC ──────────────────────────────────────────────────
 function initScrollReveal() {
   const reveals = document.querySelectorAll('.reveal-on-scroll');
-  if (!reveals.length) return;
+  if (reveals.length) {
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry, idx) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, idx * 75);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      root: null,
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    reveals.forEach(el => observer.observe(el));
+  }
 
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach((entry, idx) => {
-      if (entry.isIntersecting) {
-        // Add a slight staggered delay based on index for a cascading effect
-        setTimeout(() => {
-          entry.target.classList.add('visible');
-        }, idx * 75);
-        obs.unobserve(entry.target); // Only animate once
+  // Hide pill-nav when scrolling down past hero
+  const pillNav = document.querySelector('.pill-nav');
+  if (pillNav) {
+    window.addEventListener('scroll', () => {
+      // 100px before the hero section ends
+      if (window.scrollY > window.innerHeight - 100) {
+        pillNav.classList.add('hide-pill');
+      } else {
+        pillNav.classList.remove('hide-pill');
       }
     });
-  }, {
-    root: null,
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
-
-  reveals.forEach(el => observer.observe(el));
+  }
 }
 
 function renderFooter() {

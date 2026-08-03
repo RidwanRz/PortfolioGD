@@ -30,8 +30,18 @@
   </nav>
 
   <!-- Hero Section -->
-  <header class="hero-section full-height">
+  <header class="hero-section full-height" style="position: relative;">
+    <!-- Ambient Background -->
+    <div class="ambient-bg" id="ambient-bg">
+      <div class="ambient-orb"></div>
+      <div class="ambient-orb orb-2"></div>
+    </div>
+    
     <div class="hero-content">
+      <div class="availability-badge" id="availability-badge">
+        <div class="pulse-dot"></div> AVAILABLE FOR PROJECTS
+      </div>
+      <br>
       <span id="hero-badge" class="hero-badge">GRAPHICS DESIGN PORTFOLIO</span>
       <h1 id="hero-title" class="hero-title">
         PREMIUM<br>
@@ -43,7 +53,6 @@
         <span>SEE MY WORKS</span>
       </button>
     </div>
-    
     <div class="hero-right-panel" id="hero-right-panel">
       <!-- Original Stats (Visible on Project View) -->
       <div class="hero-stats" id="hero-stats-container">
@@ -67,6 +76,14 @@
           <!-- Slides dynamically injected by app.js -->
         </div>
       </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" id="scroll-indicator">
+      <div class="mouse">
+        <div class="wheel"></div>
+      </div>
+      <span>SCROLL</span>
     </div>
   </header>
 
