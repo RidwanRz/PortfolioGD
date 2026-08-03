@@ -252,6 +252,8 @@ function updateHero() {
   const statsContainer = document.getElementById('hero-stats-container');
   const sliderContainer = document.getElementById('hero-slider-container');
   const gridTitle = document.querySelector('#grid-section-title h2');
+  const coverImg = document.getElementById('hero-project-cover');
+  const badgeBr = document.getElementById('availability-badge-br');
 
   if (!state.activeProject) {
     badge.textContent = "GRAPHICS DESIGN PORTFOLIO";
@@ -272,6 +274,7 @@ function updateHero() {
     if (statsContainer) statsContainer.classList.add('hidden');
     if (sliderContainer) sliderContainer.classList.remove('hidden');
     document.querySelector('.hero-section').classList.add('full-height');
+    document.querySelector('.hero-section').classList.remove('project-active');
     
     const viewsBox = document.getElementById('stat-views-box');
     if (viewsBox) viewsBox.style.display = 'none';
@@ -279,6 +282,8 @@ function updateHero() {
     document.getElementById('availability-badge')?.classList.remove('hidden');
     document.getElementById('scroll-indicator')?.classList.remove('hidden');
     document.getElementById('ambient-bg')?.classList.remove('hidden');
+    coverImg?.classList.add('hidden');
+    if (badgeBr) badgeBr.style.display = 'inline';
   } else {
     badge.textContent = state.activeProject.category.toUpperCase();
     title.innerHTML = state.activeProject.title.toUpperCase();
@@ -290,10 +295,17 @@ function updateHero() {
     if (statsContainer) statsContainer.classList.remove('hidden');
     if (sliderContainer) sliderContainer.classList.add('hidden');
     document.querySelector('.hero-section').classList.remove('full-height');
+    document.querySelector('.hero-section').classList.add('project-active');
     
     document.getElementById('availability-badge')?.classList.add('hidden');
     document.getElementById('scroll-indicator')?.classList.add('hidden');
     document.getElementById('ambient-bg')?.classList.add('hidden');
+    
+    if (coverImg) {
+      coverImg.src = state.activeProject.coverImage || '';
+      coverImg.classList.remove('hidden');
+    }
+    if (badgeBr) badgeBr.style.display = 'none';
     
     const viewsBox = document.getElementById('stat-views-box');
     const viewsBadge = document.getElementById('stat-views-badge');

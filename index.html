@@ -36,22 +36,24 @@
       <div class="ambient-orb"></div>
       <div class="ambient-orb orb-2"></div>
     </div>
-    
-    <div class="hero-content">
-      <div class="availability-badge" id="availability-badge">
-        <div class="pulse-dot"></div> AVAILABLE FOR PROJECTS
+    <div class="hero-content" style="display: flex; gap: 2.5rem; align-items: center;">
+      <img id="hero-project-cover" class="hidden" src="" style="height: 240px; width: auto; max-width: 350px; border-radius: var(--rad-sm); object-fit: contain; background: transparent; flex-shrink: 0;">
+      <div>
+        <div class="availability-badge" id="availability-badge">
+          <div class="pulse-dot"></div> AVAILABLE FOR PROJECTS
+        </div>
+        <br id="availability-badge-br">
+        <span id="hero-badge" class="hero-badge">GRAPHICS DESIGN PORTFOLIO</span>
+        <h1 id="hero-title" class="hero-title">
+          PREMIUM<br>
+          <span class="text-accent">VISUALS</span> THAT<br>
+          MOVE FAST.
+        </h1>
+        <div id="hero-subtitle" class="hero-subtitle">High-impact infographics, editorial design, and data visualization crafted for forward-thinking brands.</div>
+        <button class="btn-glow" onclick="document.querySelector('.portfolio-controls').scrollIntoView({behavior: 'smooth'})">
+          <span>SEE MY WORKS</span>
+        </button>
       </div>
-      <br>
-      <span id="hero-badge" class="hero-badge">GRAPHICS DESIGN PORTFOLIO</span>
-      <h1 id="hero-title" class="hero-title">
-        PREMIUM<br>
-        <span class="text-accent">VISUALS</span> THAT<br>
-        MOVE FAST.
-      </h1>
-      <div id="hero-subtitle" class="hero-subtitle">High-impact infographics, editorial design, and data visualization crafted for forward-thinking brands.</div>
-      <button class="btn-glow" onclick="document.querySelector('.portfolio-controls').scrollIntoView({behavior: 'smooth'})">
-        <span>SEE MY WORKS</span>
-      </button>
     </div>
     <div class="hero-right-panel" id="hero-right-panel">
       <!-- Original Stats (Visible on Project View) -->

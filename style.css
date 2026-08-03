@@ -289,7 +289,10 @@ button { font-family: var(--font-display); cursor: pointer; border: none; outlin
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 2rem;
-  transition: min-height 0.3s ease;
+  transition: min-height 0.3s ease, grid-template-columns 0.3s ease;
+}
+.hero-section.project-active {
+  grid-template-columns: 2.5fr 1fr;
 }
 .hero-section.full-height {
   min-height: 100vh;
