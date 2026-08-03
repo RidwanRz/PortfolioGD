@@ -47,6 +47,7 @@ app.get('/api/data', (req, res) => {
     const data = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
     res.json(data);
   } catch (err) {
+    console.error("GET /api/data ERROR:", err);
     res.status(500).json({ error: 'Failed to read database' });
   }
 });
@@ -85,6 +86,7 @@ app.post('/api/view/:id', (req, res) => {
       res.status(404).json({ error: 'Project not found' });
     }
   } catch (err) {
+    console.error(`POST /api/view/${req.params.id} ERROR:`, err);
     res.status(500).json({ error: 'Failed to update views' });
   }
 });
