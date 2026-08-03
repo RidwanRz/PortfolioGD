@@ -114,6 +114,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Make lenis globally available for modals
     window.lenis = lenis;
+
+    // Custom Slow Smooth Snapping for Hero Section
+    let snapTimeout;
+    let isSnapping = false;
+
+    lenis.on('scroll', (e) => {
+      // Only snap on homepage
+      if (state.activeProject || isSnapping) return;
+
+      clearTimeout(snapTimeout);
+      snapTimeout = setTimeout(() => {
+        const scrollY = window.scrollY;
+        const heroElement = document.querySelector('.hero-section');
+        if (!heroElement) return;
+        
+        const heroHeight = heroElement.offsetHeight;
+        
+        // If we are partially scrolled through the hero section
+        if (scrollY > 10 && scrollY < heroHeight - 10) {
+          isSnapping = true;
+          // Bias snapping: if they scroll more than 100px, pull them down to projects. Otherwise back to top.
+          const target = scrollY > 100 ? heroHeight : 0;
+          
+          lenis.scrollTo(target, { 
+            duration: 3, // Reduced from 2s for a slightly faster but still smooth snap
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+          });
+          
+          setTimeout(() => {
+            isSnapping = false;
+          }, 900); // 1.2s animation + small buffer
+        }
+      }, 200); // Trigger shortly after manual scroll stops
+    });
   }
 
   await loadCategories();
@@ -608,7 +642,7 @@ function setZoom(z) {
 
 
 // ─── EVENT BINDINGS ───────────────────────────────────────────────────────
-function transitionPage(callback) {
+function transitionPage(callback, options = { scrollToTop: true }) {
   const main = document.querySelector('main.main-content');
   if (!main) return callback();
   
@@ -616,10 +650,20 @@ function transitionPage(callback) {
   setTimeout(() => {
     callback();
     
-    if (window.lenis) {
-      window.lenis.scrollTo(0, { immediate: true });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'instant' });
+    if (options.scrollToTop) {
+      if (window.lenis) {
+        window.lenis.scrollTo(0, { immediate: true });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    } else if (options.scrollToProjects) {
+      const hero = document.querySelector('.hero-section');
+      const targetY = hero ? hero.offsetHeight : 0;
+      if (window.lenis) {
+        window.lenis.scrollTo(targetY, { immediate: true });
+      } else {
+        window.scrollTo({ top: targetY, behavior: 'instant' });
+      }
     }
     
     setTimeout(() => main.classList.remove('page-transitioning'), 50);
@@ -628,15 +672,16 @@ function transitionPage(callback) {
 
 function bindEvents() {
   window.addEventListener('popstate', (e) => {
+    const returningToHome = !e.state || !e.state.projectId;
     transitionPage(() => {
       if (e.state && e.state.projectId) {
-        state.activeProject = state.projects.find(p => p.id === e.state.projectId) || null;
+        state.activeProject = state.projects.find(p => p.id === e.state.projectId);
       } else {
         state.activeProject = null;
       }
       state.activeCategory = 'all';
       renderAll();
-    });
+    }, { scrollToTop: !returningToHome, scrollToProjects: returningToHome });
   });
 
   document.getElementById('back-to-projects-btn')?.addEventListener('click', () => {
@@ -645,7 +690,7 @@ function bindEvents() {
       state.activeCategory = 'all'; // Reset category when exiting a project
       history.pushState({ projectId: null }, '', window.location.pathname);
       renderAll();
-    });
+    }, { scrollToTop: false, scrollToProjects: true });
   });
 
   ['open-admin-btn', 'quick-pin-btn'].forEach(id => document.getElementById(id)?.addEventListener('click', openPinModal));
