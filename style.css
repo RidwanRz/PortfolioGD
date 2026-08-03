@@ -1288,6 +1288,8 @@ html.lenis, html.lenis body {
   overflow: hidden;
   z-index: -1;
   pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
 }
 .ambient-orb {
   position: absolute;

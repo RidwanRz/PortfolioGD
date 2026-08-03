@@ -231,6 +231,7 @@ function renderAll() {
 
 function animateText(element, text) {
   element.innerHTML = '';
+  element.dataset.text = text;
   text.split('').forEach((char, i) => {
     const span = document.createElement('span');
     span.textContent = char === ' ' ? '\u00A0' : char;
@@ -266,7 +267,7 @@ function updateHero() {
       </span>`;
     subtitle.textContent = 'High-impact infographics, editorial design, and data visualization crafted for forward-thinking brands.';
     if (statLabel) statLabel.textContent = 'TOTAL PROJECTS';
-    if (gridTitle && gridTitle.textContent !== 'MY PROJECTS') animateText(gridTitle, 'MY PROJECTS');
+    if (gridTitle && gridTitle.dataset.text !== 'MY PROJECTS') animateText(gridTitle, 'MY PROJECTS');
     backBtn.classList.add('hidden');
     if (statsContainer) statsContainer.classList.add('hidden');
     if (sliderContainer) sliderContainer.classList.remove('hidden');
@@ -284,7 +285,7 @@ function updateHero() {
     const rawDesc = state.activeProject.description || 'Project details.';
     subtitle.innerHTML = typeof marked !== 'undefined' ? marked.parse(rawDesc) : rawDesc;
     if (statLabel) statLabel.textContent = 'TOTAL WORKS';
-    if (gridTitle && gridTitle.textContent !== 'PROJECT WORKS') animateText(gridTitle, 'PROJECT WORKS');
+    if (gridTitle && gridTitle.dataset.text !== 'PROJECT WORKS') animateText(gridTitle, 'PROJECT WORKS');
     backBtn.classList.remove('hidden');
     if (statsContainer) statsContainer.classList.remove('hidden');
     if (sliderContainer) sliderContainer.classList.add('hidden');
