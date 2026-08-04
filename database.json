@@ -22,6 +22,29 @@
       "views": 2
     },
     {
+      "id": "proj-1785776075791",
+      "title": "DoYourTip",
+      "category": "Crypto / Finance",
+      "status": "live",
+      "coverImage": "images/DoYourTip/logo/logo.png",
+      "date": "2021-05-04",
+      "tags": [
+        "Poster"
+      ],
+      "description": "**DoYourTip** encapsulates the spirit and energy of a place where you meet people from seven continents and get tokens for hanging out and being active in the group.\n\nI have worked for DoYourTip as a volunteer in the community!",
+      "isInitial": false,
+      "works": [
+        {
+          "id": "w-1785776075791-0",
+          "image": "images/DoYourTip/works/Tipply Art.jpg",
+          "title": "Tipply Art",
+          "category": "Poster",
+          "description": "A TipplyTank Poster from DoYourTip Deflationary cryto project."
+        }
+      ],
+      "views": 1
+    },
+    {
       "id": "proj-1785644290153",
       "title": "The Tip Room",
       "category": "Crypto / Finance",
